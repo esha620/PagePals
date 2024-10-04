@@ -1,6 +1,7 @@
 package com.example.pagepals1
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -33,6 +34,7 @@ class ClubsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d("Lifecycle", "onCreateView triggered") // Checkpoint 3 logging
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_clubs, container, false)
     }

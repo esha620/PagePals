@@ -23,6 +23,17 @@ class MainActivity : AppCompatActivity() {
     private val correctUsername = "user123"
     private val correctPassword = "password"
 
+    // Methods for logging purposed
+    override fun onPause() {
+        super.onPause()
+        Log.d("Lifecycle", "onPause triggered") // Checkpoint 3 logging
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("Lifecycle", "onResume triggered") // Checkpoint 3 logging
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
