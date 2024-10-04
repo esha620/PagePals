@@ -26,6 +26,7 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -36,6 +37,10 @@ android {
 }
 
 dependencies {
+
+    //Android Navigation
+    implementation("androidx.navigation:navigation-fragment-ktx:2.1.0-alpha05")
+    implementation ("androidx.navigation:navigation-ui-ktx:2.1.0-alpha05")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

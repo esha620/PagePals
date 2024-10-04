@@ -10,11 +10,15 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.navigation.NavController
 
 class MainActivity : AppCompatActivity() {
     lateinit var usernameInput : EditText
     lateinit var passwordInput : EditText
     lateinit var loginBtn : Button
+
+    // nav controller
+    private lateinit var navController: NavController
 
     private val correctUsername = "user123"
     private val correctPassword = "password"
@@ -52,4 +56,7 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
+
+
 }
