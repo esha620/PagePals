@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "877454500642",
+    "project_id": "pagepals-11193",
+    "storage_bucket": "pagepals-11193.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:877454500642:android:70d35969f0ae7c09993b7b",
+        "android_client_info": {
+          "package_name": "com.example.pagepals1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgtnoy4ETcHXnjn9avTpxr_prlFgGTAiA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
