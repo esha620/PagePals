@@ -56,16 +56,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <CheckBox
-                    android:id="@+id/remember_me_checkbox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:alpha="0.7"
-                    android:buttonTint="@color/white"
-                    android:text="Remember me"
-                    android:textColor="@color/white" />
-
                 <TextView
                     android:id="@+id/forgot_password"
                     android:layout_width="wrap_content"

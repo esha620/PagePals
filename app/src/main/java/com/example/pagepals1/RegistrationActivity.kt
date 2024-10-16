@@ -21,6 +21,16 @@ class RegistrationActivity : AppCompatActivity() {
     lateinit var auth: FirebaseAuth
     lateinit var loginTextView: TextView
 
+    public override fun onStart() {
+        super.onStart()
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            var intent: Intent = Intent(applicationContext, HomeScreen::class.java)
+            startActivity(intent)
+            finish()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -63,6 +73,9 @@ class RegistrationActivity : AppCompatActivity() {
                             "Account created.",
                             Toast.LENGTH_SHORT,
                         ).show()
+                        var intent: Intent = Intent(applicationContext, LoginActivity::class.java)
+                        startActivity(intent)
+                        finish()
                     } else {
                         // If sign in fails, display a message to the user.
                         Toast.makeText(
