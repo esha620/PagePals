@@ -1,4 +1,4 @@
-package com.example.pagepals1
+package com.example.pagepals1.fragments.clubs
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.example.pagepals1.R
 import com.example.pagepals1.data.BookClub
 
 class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
@@ -22,8 +23,6 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-
-        //holder.setIsRecyclable(false)
 
         val currentItem = clubList[position]
         holder.itemView.findViewById<TextView>(R.id.textView4).text = currentItem.clubId.toString()

@@ -1,4 +1,4 @@
-package com.example.pagepals1
+package com.example.pagepals1.fragments.clubs
 
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.pagepals1.R
 import com.example.pagepals1.data.BookClubViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 

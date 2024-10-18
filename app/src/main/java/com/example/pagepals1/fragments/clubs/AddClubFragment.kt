@@ -1,4 +1,4 @@
-package com.example.pagepals1
+package com.example.pagepals1.fragments.clubs
 
 import android.os.Bundle
 import android.text.TextUtils
@@ -11,6 +11,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.example.pagepals1.R
 import com.example.pagepals1.data.BookClub
 import com.example.pagepals1.data.BookClubViewModel
 

@@ -1,12 +1,9 @@
-package com.example.pagepals1
+package com.example.pagepals1.fragments.clubs
 
 import android.os.Bundle
 import android.text.TextUtils
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -16,10 +13,10 @@ import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.pagepals1.R
 import com.example.pagepals1.data.BookClub
 import com.example.pagepals1.data.BookClubViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import org.w3c.dom.Text
 
 
 class UpdateFragment : Fragment() {

@@ -1,4 +1,4 @@
-package com.example.pagepals1
+package com.example.pagepals1.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.NavController
+import com.example.pagepals1.R
 
 class MainActivity : AppCompatActivity() {
     lateinit var usernameInput : EditText
