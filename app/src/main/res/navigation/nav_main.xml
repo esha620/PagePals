@@ -25,4 +25,9 @@
         android:name="com.example.pagepals1.DiscoverFragment"
         android:label="fragment_discover"
         tools:layout="@layout/fragment_discover" />
+    <fragment
+        android:id="@+id/addClubFragment"
+        android:name="com.example.pagepals1.AddClubFragment"
+        android:label="fragment_add_club"
+        tools:layout="@layout/fragment_add_club" />
 </navigation>

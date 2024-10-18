@@ -7,10 +7,10 @@
     <item android:title="Discover"
         android:id="@+id/discoverFragment"
         android:icon="@drawable/baseline_menu_book_24"/>
-    <item android:title="Location"
-        android:id="@+id/clubsFragment"
-        android:icon="@drawable/baseline_location_on_24"/>
     <item android:title="Clubs"
-        android:id="@+id/locationFragment"
+        android:id="@+id/clubsFragment"
         android:icon="@drawable/baseline_menu_24"/>
+    <item android:title="Location"
+        android:id="@+id/locationFragment"
+        android:icon="@drawable/baseline_location_on_24"/>
 </menu>
