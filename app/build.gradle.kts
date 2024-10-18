@@ -1,9 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
-    id("androidx.room")
-    //id("kotlin-android")
-    id("kotlin-kapt")
+    id("org.jetbrains.kotlin.kapt")
 }
 
 android {
@@ -31,30 +29,26 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+    buildFeatures {
+        viewBinding = true
     }
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
-    }
-
-    room {
-        schemaDirectory("$projectDir/schemas")
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
 }
 
 dependencies {
 
+    implementation("androidx.room:room-runtime:2.6.1") // Replace with the latest version
+    implementation("androidx.room:room-ktx:2.6.1") // Kotlin extensions for Room
+    kapt("androidx.room:room-compiler:2.6.1") // Annotation processor for Room
+
     //Android Navigation
     implementation("androidx.navigation:navigation-fragment-ktx:2.1.0-alpha05")
     implementation ("androidx.navigation:navigation-ui-ktx:2.1.0-alpha05")
-
-    // for room
-    implementation("androidx.room:room-runtime:2.6.1")
-    implementation("androidx.room:room-ktx:2.6.1")
-    //kapt("androidx.room:room-compilier:2.6.1")
-    annotationProcessor("androidx.room:room-compilier:2.6.1")
-
 
     // lifecycle
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
@@ -68,14 +62,11 @@ dependencies {
 
 
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.navigation.runtime.ktx)
-    implementation(libs.androidx.room.common)
-    implementation(libs.androidx.room.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
