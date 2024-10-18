@@ -9,4 +9,12 @@ class BookClubRepository(private val bookClubDao: BookClubDao) {
     suspend fun addBookClub(bookClub: BookClub) {
         bookClubDao.addBookClub(bookClub)
     }
+
+    suspend fun updateBookClub(bookClub: BookClub) {
+        bookClubDao.updateBookClub(bookClub)
+    }
+
+    suspend fun deleteBookClub(bookClub: BookClub) {
+        bookClubDao.deleteBookClub(bookClub)
+    }
 }

@@ -14,7 +14,11 @@
         android:id="@+id/clubsFragment"
         android:name="com.example.pagepals1.ClubsFragment"
         android:label="fragment_clubs"
-        tools:layout="@layout/fragment_clubs" />
+        tools:layout="@layout/fragment_clubs" >
+        <action
+            android:id="@+id/action_clubsFragment_to_updateFragment"
+            app:destination="@id/updateFragment" />
+    </fragment>
     <fragment
         android:id="@+id/locationFragment"
         android:name="com.example.pagepals1.LocationFragment"
@@ -30,4 +34,15 @@
         android:name="com.example.pagepals1.AddClubFragment"
         android:label="fragment_add_club"
         tools:layout="@layout/fragment_add_club" />
+    <fragment
+        android:id="@+id/updateFragment"
+        android:name="com.example.pagepals1.UpdateFragment"
+        android:label="UpdateFragment" >
+        <argument
+            android:name="currentBookClub"
+            app:argType="com.example.pagepals1.data.BookClub" />
+        <action
+            android:id="@+id/action_updateFragment_to_clubsFragment"
+            app:destination="@id/clubsFragment" />
+    </fragment>
 </navigation>

@@ -25,4 +25,16 @@ class BookClubViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
+    fun updateBookClub(bookClub: BookClub) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateBookClub(bookClub)
+        }
+    }
+
+    fun deleteBookClub(bookClub: BookClub) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteBookClub(bookClub)
+        }
+    }
+
 }
