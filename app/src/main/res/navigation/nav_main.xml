@@ -7,22 +7,42 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.pagepals1.HomeFragment"
+        android:name="com.example.pagepals1.fragments.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/clubsFragment"
-        android:name="com.example.pagepals1.ClubsFragment"
+        android:name="com.example.pagepals1.fragments.clubs.ClubsFragment"
         android:label="fragment_clubs"
-        tools:layout="@layout/fragment_clubs" />
+        tools:layout="@layout/fragment_clubs" >
+        <action
+            android:id="@+id/action_clubsFragment_to_updateFragment"
+            app:destination="@id/updateFragment" />
+    </fragment>
     <fragment
         android:id="@+id/locationFragment"
-        android:name="com.example.pagepals1.LocationFragment"
+        android:name="com.example.pagepals1.fragments.location.LocationFragment"
         android:label="fragment_location"
         tools:layout="@layout/fragment_location" />
     <fragment
         android:id="@+id/discoverFragment"
-        android:name="com.example.pagepals1.DiscoverFragment"
+        android:name="com.example.pagepals1.fragments.discover.DiscoverFragment"
         android:label="fragment_discover"
         tools:layout="@layout/fragment_discover" />
+    <fragment
+        android:id="@+id/addClubFragment"
+        android:name="com.example.pagepals1.fragments.clubs.AddClubFragment"
+        android:label="fragment_add_club"
+        tools:layout="@layout/fragment_add_club" />
+    <fragment
+        android:id="@+id/updateFragment"
+        android:name="com.example.pagepals1.fragments.clubs.UpdateFragment"
+        android:label="UpdateFragment" >
+        <argument
+            android:name="currentBookClub"
+            app:argType="com.example.pagepals1.data.BookClub" />
+        <action
+            android:id="@+id/action_updateFragment_to_clubsFragment"
+            app:destination="@id/clubsFragment" />
+    </fragment>
 </navigation>

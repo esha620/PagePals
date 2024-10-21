@@ -1,4 +1,4 @@
-package com.example.pagepals1
+package com.example.pagepals1.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.NavController
+import com.example.pagepals1.R
 
 class MainActivity : AppCompatActivity() {
     lateinit var usernameInput : EditText
@@ -22,6 +23,17 @@ class MainActivity : AppCompatActivity() {
 
     private val correctUsername = "user123"
     private val correctPassword = "password"
+
+    // Methods for logging purposed
+    override fun onPause() {
+        super.onPause()
+        Log.d("Lifecycle", "onPause triggered") // Checkpoint 3 logging
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("Lifecycle", "onResume triggered") // Checkpoint 3 logging
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
