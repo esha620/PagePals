@@ -1,4 +1,4 @@
-package com.example.pagepals1
+package com.example.pagepals1.fragments.home
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

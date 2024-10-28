@@ -9,6 +9,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.pagepals1.LoginActivity
 import com.example.pagepals1.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.Firebase
