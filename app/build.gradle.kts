@@ -63,6 +63,13 @@ dependencies {
     api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.5")
     api("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.5")
 
+    // books explore dependencies
+    implementation("com.android.volley:volley:1.2.1")
+    implementation("com.squareup.picasso:picasso:2.8")
+    implementation("com.github.bumptech.glide:glide:4.15.1")
+
+
+
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
