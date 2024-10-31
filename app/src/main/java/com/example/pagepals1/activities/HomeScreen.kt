@@ -20,7 +20,7 @@ import com.google.firebase.auth.auth
 class HomeScreen : AppCompatActivity() {
 
     lateinit var auth: FirebaseAuth
-    lateinit var logoutBtn : Button
+   // lateinit var logoutBtn : Button
     var user : FirebaseUser? = null
 
 
@@ -29,7 +29,7 @@ class HomeScreen : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_home)
         auth = FirebaseAuth.getInstance()
-        logoutBtn = findViewById(R.id.logout)
+        //logoutBtn = findViewById(R.id.logout)
 
         user = auth.currentUser
         if (user == null){
@@ -37,13 +37,13 @@ class HomeScreen : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-
-        logoutBtn.setOnClickListener{
-            Firebase.auth.signOut()
-            var intent: Intent = Intent(applicationContext, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
+//
+//        logoutBtn.setOnClickListener{
+//            Firebase.auth.signOut()
+//            var intent: Intent = Intent(applicationContext, LoginActivity::class.java)
+//            startActivity(intent)
+//            finish()
+//        }
 
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
