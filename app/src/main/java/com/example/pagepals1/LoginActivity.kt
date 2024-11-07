@@ -19,6 +19,7 @@ class LoginActivity : AppCompatActivity() {
     lateinit var loginBtn : Button
     lateinit var auth: FirebaseAuth
     lateinit var regTextView: TextView
+    lateinit var resetPassword : TextView
 
     public override fun onStart() {
         super.onStart()
@@ -44,11 +45,22 @@ class LoginActivity : AppCompatActivity() {
         loginBtn = findViewById(R.id.login_btn)
         auth = FirebaseAuth.getInstance()
         regTextView = findViewById(R.id.registerNow)
+        resetPassword = findViewById(R.id.forgot_password)
 
         regTextView.setOnClickListener{
             var intent: Intent = Intent(applicationContext, RegistrationActivity::class.java)
             startActivity(intent)
             finish()
+        }
+
+        resetPassword.setOnClickListener{
+            FirebaseAuth.getInstance().sendPasswordResetEmail(usernameInput.text.toString())
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(this, "Reset email has been sent", Toast.LENGTH_SHORT).show()
+
+                    }
+                }
         }
 
         loginBtn.setOnClickListener{

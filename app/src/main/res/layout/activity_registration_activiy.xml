@@ -27,30 +27,63 @@
                 android:src="@drawable/icon_account_circle" />
 
             <EditText
-                android:id="@+id/username_input"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginTop="32dp"
-                android:background="@drawable/rounded_corner"
-                android:hint="Username"
-                android:inputType="text"
-                android:padding="10dp"
+                android:hint="Name"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:background="@drawable/rounded_corner"
+                android:padding="10dp"
+                android:inputType="text"
+                android:id="@+id/name_input"/>
+
 
             <EditText
-                android:id="@+id/password_input"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/rounded_corner"
-                android:hint="Password"
-                android:inputType="textPassword"
-                android:padding="10dp"
+                android:hint="Username/Email"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:background="@drawable/rounded_corner"
+                android:padding="10dp"
+                android:inputType="text"
+                android:id="@+id/username_input"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="16dp"
+                android:hint="Password"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="20sp"
+                android:background="@drawable/rounded_corner"
+                android:padding="10dp"
+                android:inputType="textPassword"
+                android:id="@+id/password_input"/>
+
+            <LinearLayout
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/genre_container"
+                android:padding="10dp"
+                android:background="@drawable/rounded_corner">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Select your favorite genres"
+                    android:textColor="@color/white"
+                    android:layout_marginBottom="8dp" />
+
+            </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -72,7 +105,7 @@
                 android:id="@+id/register_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32sp"
+                android:layout_marginTop="16sp"
                 android:backgroundTint="@color/white"
                 android:padding="18dp"
                 android:text="Register"
