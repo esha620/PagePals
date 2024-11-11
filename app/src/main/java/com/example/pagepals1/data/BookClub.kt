@@ -14,4 +14,6 @@ data class BookClub (
     val clubName: String,
     val host: String,
     val city: String
+    val hostId: String,
+    val members: List<String>
 ): Parcelable
