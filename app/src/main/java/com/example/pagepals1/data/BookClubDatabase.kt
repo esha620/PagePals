@@ -4,8 +4,10 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 
-@Database(entities = [BookClub::class], version = 1)
+@Database(entities = [BookClub::class], version = 2)
+@TypeConverters(Converters::class)  // Add this line to link the converter
 abstract class BookClubDatabase: RoomDatabase() {
 
     abstract fun bookClubDao(): BookClubDao
@@ -24,7 +26,7 @@ abstract class BookClubDatabase: RoomDatabase() {
                     context.applicationContext,
                     BookClubDatabase::class.java,
                     "bookClubDatabase"
-                ).build()
+                ).fallbackToDestructiveMigration().build()
                 INSTANCE = instance
                 return instance
             }

@@ -2,11 +2,16 @@ package com.example.pagepals1.data
 
 import android.content.Context
 import android.widget.Toast
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
-data class User(val id: String, val name: String, val username: String, val password: String, val genres: List<String>) {
+data class User(
+    val id: String = "",
+    val name: String = "",
+    val username: String = "",
+    val password: String = "",
+    val genres: List<String> = emptyList()
+) {
 
     private fun getFirebaseUser(id: String): DatabaseReference {
         return FirebaseDatabase.getInstance().getReference("users").child(id)
@@ -16,7 +21,7 @@ data class User(val id: String, val name: String, val username: String, val pass
         val userRef = getFirebaseUser(userId)
         userRef.child("name").setValue(newName)
             .addOnCompleteListener { task ->
-                if (!task.isSuccessful){
+                if (!task.isSuccessful) {
                     Toast.makeText(
                         context,
                         "Unable to update name",
@@ -30,7 +35,7 @@ data class User(val id: String, val name: String, val username: String, val pass
         val userRef = getFirebaseUser(userId)
         userRef.child("genres").setValue(updatedGenres)
             .addOnCompleteListener { task ->
-                if (!task.isSuccessful){
+                if (!task.isSuccessful) {
                     Toast.makeText(
                         context,
                         "Unable to update favorite genres",

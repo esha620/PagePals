@@ -13,31 +13,44 @@ import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.pagepals1.R
 import com.example.pagepals1.data.BookClub
 import com.example.pagepals1.data.BookClubViewModel
+import com.example.pagepals1.data.User
+import com.example.pagepals1.data.UserSelection
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class UpdateFragment : Fragment() {
 
     private val args by navArgs<UpdateFragmentArgs>()
     private lateinit var mBookClubViewModel: BookClubViewModel
+    private lateinit var userRecyclerView: RecyclerView
+    private lateinit var userSelectionAdapter: UserSelectionAdapter
+    private val selectedUserIds = mutableListOf<String>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_update, container, false)
 
         mBookClubViewModel = ViewModelProvider(this).get(BookClubViewModel::class.java)
 
+        // Set current club name
         view.findViewById<EditText>(R.id.updateClubName).setText(args.currentBookClub.clubName)
-        view.findViewById<EditText>(R.id.updateHostName).setText(args.currentBookClub.host)
+
+        userRecyclerView = view.findViewById(R.id.rv_users)
+        userRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        loadUsers(view)
 
         view.findViewById<Button>(R.id.updateBtn).setOnClickListener {
-            updateIten(view)
+            updateItem(view)
         }
 
         view.findViewById<FloatingActionButton>(R.id.deleteBtn).setOnClickListener {
@@ -47,26 +60,71 @@ class UpdateFragment : Fragment() {
         return view
     }
 
-    private fun updateIten(view: View) {
-        val clubName = view.findViewById<EditText>(R.id.updateClubName).text.toString()
-        val hostName = view.findViewById<EditText>(R.id.updateHostName).text.toString()
+    private fun loadUsers(view: View) {
+        val database = FirebaseDatabase.getInstance()
+        val usersRef = database.getReference("users")
+        val userList = mutableListOf<UserSelection>()
 
-        if(inputCheck(clubName,hostName)) {
-            val updatedClub = BookClub(args.currentBookClub.clubId, clubName, hostName)
+        usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                userList.clear()
+
+                for (userSnapshot in snapshot.children) {
+                    val id = userSnapshot.child("id").getValue(String::class.java)
+                    val name = userSnapshot.child("name").getValue(String::class.java)
+                    val username = userSnapshot.child("username").getValue(String::class.java)
+                    val genresSnapshot = userSnapshot.child("genres")
+                    val genres = genresSnapshot.children.mapNotNull { it.getValue(String::class.java) }
+
+                    if (id != null && name != null && username != null) {
+                        val user = User(id, name, username, "", genres)
+                        val isSelected = args.currentBookClub.members.contains(id)
+                        if (isSelected) selectedUserIds.add(id)
+                        userList.add(UserSelection(user, isSelected))
+                    }
+                }
+
+                // Initialize adapter with selected members
+                userSelectionAdapter = UserSelectionAdapter(userList) { userId, isSelected ->
+                    if (isSelected) {
+                        selectedUserIds.add(userId)
+                    } else {
+                        selectedUserIds.remove(userId)
+                    }
+                }
+
+                userRecyclerView.adapter = userSelectionAdapter
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(context, "Error loading users: ${error.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    private fun updateItem(view: View) {
+        val clubName = view.findViewById<EditText>(R.id.updateClubName).text.toString()
+        val hostId = args.currentBookClub.hostId
+
+        if (inputCheck(clubName, hostId)) {
+            val updatedClub = BookClub(
+                clubId = args.currentBookClub.clubId,
+                clubName = clubName,
+                hostId = hostId,
+                members = listOf(hostId) + selectedUserIds  // Include host and selected members
+            )
+
             mBookClubViewModel.updateBookClub(updatedClub)
             Toast.makeText(requireContext(), "Successfully Updated!", Toast.LENGTH_SHORT).show()
-            // navigate back to clubs pg
             findNavController().navigate(R.id.action_updateFragment_to_clubsFragment)
         } else {
             Toast.makeText(requireContext(), "Please fill out all fields", Toast.LENGTH_SHORT).show()
         }
-
     }
 
     private fun inputCheck(clubName: String, host: String): Boolean {
-        return !(TextUtils.isEmpty(clubName) && TextUtils.isEmpty(host))
+        return !(TextUtils.isEmpty(clubName) || TextUtils.isEmpty(host))
     }
-
 
     private fun deleteClub() {
         val builder = AlertDialog.Builder(requireContext())
@@ -79,5 +137,4 @@ class UpdateFragment : Fragment() {
         builder.setTitle("Delete ${args.currentBookClub.clubName}?")
         builder.create().show()
     }
-
 }
