@@ -107,15 +107,19 @@ class AddClubFragment : Fragment() {
 
     private fun insertDataToDatabase(view: View) {
         val clubName = view.findViewById<EditText>(R.id.editTextText).text.toString()
+        val host = view.findViewById<EditText>(R.id.editTextText2).text.toString()
+        val city = view.findViewById<EditText>(R.id.editTextCity).text.toString()
         val currentUser = FirebaseAuth.getInstance().currentUser
         val hostId = currentUser?.uid
+        
 
-        if (inputCheck(clubName) && hostId != null) {
+        if (inputCheck(clubName) && hostId != null && inputCheck(host) && inputCheck(city)) {
             val members = listOf(hostId) + selectedUserIds
 
             val bookClub = BookClub(
                 clubId = 0,
                 clubName = clubName,
+                city = city,
                 hostId = hostId,
                 members = members
             )

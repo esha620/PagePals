@@ -37,7 +37,6 @@ class ClubsFragment : Fragment() {
         // BookClub VM
         mBookClubViewModel = ViewModelProvider(this).get(BookClubViewModel::class.java)
         mBookClubViewModel.readAllData.observe(viewLifecycleOwner, Observer { club ->
-            Log.d("club: ", club.toString())
             adapter.setData(club)
         })
 

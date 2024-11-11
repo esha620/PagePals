@@ -1,6 +1,5 @@
 package com.example.pagepals1.fragments.clubs
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -60,7 +59,6 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
     }
 
     override fun getItemCount(): Int {
-        Log.d("club: ", clubList.size.toString())
         return clubList.size
     }
 }

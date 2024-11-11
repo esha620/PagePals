@@ -104,16 +104,19 @@ class UpdateFragment : Fragment() {
 
     private fun updateItem(view: View) {
         val clubName = view.findViewById<EditText>(R.id.updateClubName).text.toString()
+        val hostName = view.findViewById<EditText>(R.id.updateHostName).text.toString()
+        val cityName = view.findViewById<EditText>(R.id.updateCityName).text.toString()
         val hostId = args.currentBookClub.hostId
 
         if (inputCheck(clubName, hostId)) {
             val updatedClub = BookClub(
                 clubId = args.currentBookClub.clubId,
                 clubName = clubName,
+                city = city,
                 hostId = hostId,
                 members = listOf(hostId) + selectedUserIds  // Include host and selected members
             )
-
+            
             mBookClubViewModel.updateBookClub(updatedClub)
             Toast.makeText(requireContext(), "Successfully Updated!", Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.action_updateFragment_to_clubsFragment)
