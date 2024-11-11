@@ -104,7 +104,6 @@ class UpdateFragment : Fragment() {
 
     private fun updateItem(view: View) {
         val clubName = view.findViewById<EditText>(R.id.updateClubName).text.toString()
-        val hostName = view.findViewById<EditText>(R.id.updateHostName).text.toString()
         val cityName = view.findViewById<EditText>(R.id.updateCityName).text.toString()
         val hostId = args.currentBookClub.hostId
 
@@ -112,7 +111,7 @@ class UpdateFragment : Fragment() {
             val updatedClub = BookClub(
                 clubId = args.currentBookClub.clubId,
                 clubName = clubName,
-                city = city,
+                city = cityName,
                 hostId = hostId,
                 members = listOf(hostId) + selectedUserIds  // Include host and selected members
             )

@@ -12,8 +12,7 @@ data class BookClub (
     @PrimaryKey(autoGenerate = true) // lets room make the ids for us
     val clubId: Int,
     val clubName: String,
-    val host: String,
-    val city: String
+    val city: String,
     val hostId: String,
     val members: List<String>
 ): Parcelable
