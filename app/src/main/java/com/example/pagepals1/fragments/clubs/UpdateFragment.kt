@@ -50,9 +50,10 @@ class UpdateFragment : Fragment() {
     private fun updateIten(view: View) {
         val clubName = view.findViewById<EditText>(R.id.updateClubName).text.toString()
         val hostName = view.findViewById<EditText>(R.id.updateHostName).text.toString()
+        val cityName = view.findViewById<EditText>(R.id.updateCityName).text.toString()
 
         if(inputCheck(clubName,hostName)) {
-            val updatedClub = BookClub(args.currentBookClub.clubId, clubName, hostName)
+            val updatedClub = BookClub(args.currentBookClub.clubId, clubName, hostName, cityName)
             mBookClubViewModel.updateBookClub(updatedClub)
             Toast.makeText(requireContext(), "Successfully Updated!", Toast.LENGTH_SHORT).show()
             // navigate back to clubs pg

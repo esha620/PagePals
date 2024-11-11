@@ -11,7 +11,7 @@
         android:id="@+id/locationTitle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Authors in Your City"
+        android:text="Clubs in Your City"
         android:textSize="24sp"
         android:textStyle="bold" />
 
@@ -22,7 +22,30 @@
         android:text="Find Authors"
         app:layout_constraintBottom_toBottomOf="@+id/locationTitle"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="@+id/locationTitle"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.693" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/locRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="60dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/locationTitle" />
+
+    <TextView
+        android:id="@+id/noClubsMsg"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No Clubs in Your City"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/locationTitle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

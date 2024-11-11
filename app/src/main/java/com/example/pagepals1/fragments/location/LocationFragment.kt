@@ -11,6 +11,7 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.os.Looper
 import android.provider.Settings
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -20,15 +21,18 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-//import com.example.pagepals1.Manifest
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.pagepals1.R
+import com.example.pagepals1.data.BookClubViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.Task
 import java.util.Locale
 
 
@@ -37,6 +41,11 @@ class LocationFragment : Fragment() {
     private lateinit var locationTitle: TextView
     private lateinit var locationBtn: Button
     private lateinit var locationClient: FusedLocationProviderClient
+    private lateinit var currentCity: String
+    private lateinit var mBookClubViewModel: BookClubViewModel
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: LocListAdapter
+    private lateinit var noClubsMsg: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,9 +54,17 @@ class LocationFragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_location, container, false)
 
+        mBookClubViewModel = ViewModelProvider(this).get(BookClubViewModel::class.java)
         locationTitle = view.findViewById(R.id.locationTitle)!!
         locationBtn = view.findViewById(R.id.getLocationButton)!!
+        noClubsMsg = view.findViewById(R.id.noClubsMsg)
+        noClubsMsg.visibility = View.INVISIBLE
         locationClient = LocationServices.getFusedLocationProviderClient(requireActivity()) // get location client
+        // create recycler view to show clubs in my city
+        recyclerView = view.findViewById(R.id.locRecycler)
+        adapter = LocListAdapter()
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         locationBtn.setOnClickListener {
             // make sure the user has given permission to access their location
@@ -91,13 +108,21 @@ class LocationFragment : Fragment() {
                 if (location != null) {
                     var addresses: MutableList<Address>? = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1)
                     if (addresses != null) {
-                        locationTitle.setText("Authors in ${addresses.get(0).getLocality()}")
+                        currentCity = addresses.get(0).getLocality()
+                        locationTitle.setText("Clubs in ${addresses.get(0).getLocality()}")
+                        showLocalClubs()
                     }
                 } else {
                     var locRequest: LocationRequest = LocationRequest().setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY).setInterval(10000).setNumUpdates(1)
                     var locCallback: LocationCallback = object : LocationCallback() {
                         override fun onLocationResult(locationResult: LocationResult) {
-                            locationTitle.setText("Authors in your area")
+                            location = locationResult.getLastLocation()
+                            var addresses: MutableList<Address>? = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1)
+                            if (addresses != null)
+                                locationTitle.setText("Clubs in ${addresses.get(0).getLocality()}")
+                            if (addresses != null) {
+                                currentCity = addresses.get(0).getLocality()
+                            }
                         }
                     }
                     locationClient.requestLocationUpdates(locRequest, locCallback, Looper.myLooper())
@@ -108,6 +133,25 @@ class LocationFragment : Fragment() {
         // location services not enabled
         startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
     }
+    }
+
+    private fun showLocalClubs() {
+        // get all clubs in the current city
+        mBookClubViewModel.readAllData.observe(viewLifecycleOwner, Observer { club ->
+            var count = 0
+            for (club in club) {
+                if (club.city == currentCity) {
+                    count++
+                    Log.d("CLUB", club.clubName)
+                    adapter.setData(club)
+                }
+            }
+            if (count == 0) {
+                noClubsMsg.visibility = View.VISIBLE
+            }
+        })
 
     }
+
+
 }

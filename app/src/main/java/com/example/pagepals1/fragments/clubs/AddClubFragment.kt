@@ -39,10 +39,11 @@ class AddClubFragment : Fragment() {
     private fun insertDataToDatabase(view: View) {
         val clubName = view.findViewById<EditText>(R.id.editTextText).text.toString()
         val host = view.findViewById<EditText>(R.id.editTextText2).text.toString()
+        val city = view.findViewById<EditText>(R.id.editTextCity).text.toString()
 
         if(inputCheck(clubName, host)) {
             // make book club object
-            val bookClub = BookClub(0, clubName, host)
+            val bookClub = BookClub(0, clubName, host, city)
             mBookClubViewModel.addBookClub(bookClub)
             Toast.makeText(requireContext(), "Successfully added club!", Toast.LENGTH_LONG).show()
 
