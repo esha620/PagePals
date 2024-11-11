@@ -1,62 +1,113 @@
 package com.example.pagepals1.fragments.location
 
+import android.content.pm.PackageManager
+import android.Manifest
+import android.content.Context
+import android.content.Intent
+import android.location.Address
+import android.location.Geocoder
+import android.location.Location
+import android.location.LocationManager
 import android.os.Bundle
-import android.util.Log
+import android.os.Looper
+import android.provider.Settings
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Button
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+//import com.example.pagepals1.Manifest
 import com.example.pagepals1.R
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
+import java.util.Locale
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [LocationFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class LocationFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var locationTitle: TextView
+    private lateinit var locationBtn: Button
+    private lateinit var locationClient: FusedLocationProviderClient
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.d("Lifecycle", "onCreateView triggered") // Checkpoint 3 logging
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_location, container, false)
+
+        val view = inflater.inflate(R.layout.fragment_location, container, false)
+
+        locationTitle = view.findViewById(R.id.locationTitle)!!
+        locationBtn = view.findViewById(R.id.getLocationButton)!!
+        locationClient = LocationServices.getFusedLocationProviderClient(requireActivity()) // get location client
+
+        locationBtn.setOnClickListener {
+            // make sure the user has given permission to access their location
+            if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                // now get the location
+                getLocation()
+            } else {
+                // permission not granted
+                shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION)
+                shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_COARSE_LOCATION)
+                Toast.makeText(activity,"Location permission not granted", Toast.LENGTH_LONG).show()
+            }
+        }
+        return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment LocationFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            LocationFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+
+    private fun getLocation() {
+        var locManager: LocationManager =
+            requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+
+        // check that gps or network is enabled
+        if (locManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locManager.isProviderEnabled(
+                LocationManager.NETWORK_PROVIDER)) {
+            // more permission checks
+            if (ActivityCompat.checkSelfPermission(
+                    this.requireContext(),
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                    this.requireContext(),
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) { return }
+
+            locationClient.getLastLocation().addOnCompleteListener(OnCompleteListener<Location> { task ->
+
+                var location: Location = task.getResult()
+                var geocoder = Geocoder(requireActivity(), Locale.getDefault())
+
+                if (location != null) {
+                    var addresses: MutableList<Address>? = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1)
+                    if (addresses != null) {
+                        locationTitle.setText("Authors in ${addresses.get(0).getLocality()}")
+                    }
+                } else {
+                    var locRequest: LocationRequest = LocationRequest().setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY).setInterval(10000).setNumUpdates(1)
+                    var locCallback: LocationCallback = object : LocationCallback() {
+                        override fun onLocationResult(locationResult: LocationResult) {
+                            locationTitle.setText("Authors in your area")
+                        }
+                    }
+                    locationClient.requestLocationUpdates(locRequest, locCallback, Looper.myLooper())
                 }
-            }
+        })
+
+    } else {
+        // location services not enabled
+        startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+    }
+
     }
 }

@@ -47,7 +47,8 @@ dependencies {
 
     implementation("androidx.room:room-runtime:2.6.1") // Replace with the latest version
     implementation("androidx.room:room-ktx:2.6.1")
-    implementation(libs.firebase.database.ktx) // Kotlin extensions for Room
+    implementation(libs.firebase.database.ktx)
+    implementation(libs.firebase.common.ktx) // Kotlin extensions for Room
     kapt("androidx.room:room-compiler:2.6.1") // Annotation processor for Room
 
     //Android Navigation
@@ -69,6 +70,8 @@ dependencies {
     implementation("com.squareup.picasso:picasso:2.8")
     implementation("com.github.bumptech.glide:glide:4.15.1")
 
+    // location service
+    implementation("com.google.android.gms:play-services-location:17.0.0")
 
 
 
