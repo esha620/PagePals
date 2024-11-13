@@ -58,10 +58,25 @@ class HomeFragment : Fragment() {
         }
 
         val viewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
+        val editProfileButton = view.findViewById<Button>(R.id.edit_profile_btn)
 
         viewModel.user.observe(viewLifecycleOwner) { user ->
-            Log.d("FirebaseData", "Fragment User Object: $user")
+        Log.d("FirebaseData", "Fragment User Object: $user")
             if (user != null) {
+
+                editProfileButton.setOnClickListener {
+                    val fragmentManager = requireActivity().supportFragmentManager
+                    val transaction = fragmentManager.beginTransaction()
+                    val fragment = EditProfileFragment()
+                    fragment.arguments = Bundle().apply { // Create a Bundle for arguments
+                        putString("userId", user.id) // Put the user ID in the Bundle
+                    }
+                    transaction.replace(R.id.main, fragment)
+                    transaction.addToBackStack(null) // Add the transaction to the back stack
+                    transaction.commit()
+
+                }
+
                 val userNameTextView : TextView = view.findViewById(R.id.user_name)
                 userNameTextView.text = user.name
 
@@ -111,7 +126,6 @@ class HomeFragment : Fragment() {
 
                     clubContainer?.addView(clubLayout)
                 }
-
             }
         }
 
