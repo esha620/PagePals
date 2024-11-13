@@ -2,13 +2,19 @@ package com.example.pagepals1.fragments.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
 import com.example.pagepals1.LoginActivity
 import com.example.pagepals1.R
+import com.example.pagepals1.fragments.UserViewModel
 import com.google.firebase.auth.FirebaseAuth
 
 // TODO: Rename parameter arguments, choose names that match
@@ -46,6 +52,35 @@ class HomeFragment : Fragment() {
             val intent = Intent(requireContext(), LoginActivity::class.java)
             startActivity(intent)
             activity?.finish()
+        }
+
+        val viewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
+
+        viewModel.user.observe(viewLifecycleOwner) { user ->
+            Log.d("FirebaseData", "Fragment User Object: $user")
+            if (user != null) {
+                val userNameTextView : TextView = view.findViewById(R.id.user_name)
+                userNameTextView.text = user.name
+
+                // Update favorite genres
+                val genresContainer = view?.findViewById<LinearLayout>(R.id.genre_container)
+                val favText = view.findViewById<TextView>(R.id.fav_genre_text)
+                favText.text = "Favorite Genres:"
+                genresContainer?.removeAllViews()
+                genresContainer?.orientation = LinearLayout.VERTICAL
+
+                for (genre in user.genres) {
+                    val genreLayout = LayoutInflater.from(context).inflate(R.layout.genre_item, genresContainer, false)
+                    val genreTextView = genreLayout.findViewById<TextView>(R.id.genre_text)
+                    val genreIcon = genreLayout.findViewById<ImageView>(R.id.genre_icon)
+
+                    genreTextView.text = genre
+                    genreIcon.setBackgroundResource(R.drawable.circle_shape) // Replace with your circle shape drawable
+
+                    genresContainer?.addView(genreLayout)
+                }
+
+            }
         }
 
         return view

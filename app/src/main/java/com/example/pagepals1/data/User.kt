@@ -13,7 +13,7 @@ data class User(
     val genres: List<String> = emptyList()
 ) {
 
-    private fun getFirebaseUser(id: String): DatabaseReference {
+    fun getFirebaseUser(id: String): DatabaseReference {
         return FirebaseDatabase.getInstance().getReference("users").child(id)
     }
 
