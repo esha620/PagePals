@@ -10,7 +10,8 @@ data class User(
     val name: String = "",
     val username: String = "",
     val password: String = "",
-    val genres: List<String> = emptyList()
+    val genres: List<String> = emptyList(),
+    val clubs: List<BookClub> = emptyList()
 ) {
 
     fun getFirebaseUser(id: String): DatabaseReference {

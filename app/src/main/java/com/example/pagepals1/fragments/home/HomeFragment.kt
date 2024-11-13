@@ -1,6 +1,8 @@
 package com.example.pagepals1.fragments.home
 
 import android.content.Intent
+import android.graphics.Paint
+import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -16,6 +18,7 @@ import com.example.pagepals1.LoginActivity
 import com.example.pagepals1.R
 import com.example.pagepals1.fragments.UserViewModel
 import com.google.firebase.auth.FirebaseAuth
+import java.time.format.TextStyle
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -64,9 +67,15 @@ class HomeFragment : Fragment() {
 
                 // Update favorite genres
                 val genresContainer = view?.findViewById<LinearLayout>(R.id.genre_container)
-                val favText = view.findViewById<TextView>(R.id.fav_genre_text)
-                favText.text = "Favorite Genres:"
                 genresContainer?.removeAllViews()
+
+                // Adding title
+                val genreTitleTextView = TextView(context)
+                genreTitleTextView.text = "Favorite Genres:"
+                genreTitleTextView.textSize = 18F
+                val boldTypeface = Typeface.DEFAULT_BOLD
+                genreTitleTextView.typeface = boldTypeface
+                genresContainer?.addView(genreTitleTextView)
                 genresContainer?.orientation = LinearLayout.VERTICAL
 
                 for (genre in user.genres) {
@@ -75,9 +84,32 @@ class HomeFragment : Fragment() {
                     val genreIcon = genreLayout.findViewById<ImageView>(R.id.genre_icon)
 
                     genreTextView.text = genre
-                    genreIcon.setBackgroundResource(R.drawable.circle_shape) // Replace with your circle shape drawable
+                    genreIcon.setBackgroundResource(R.drawable.circle_shape)
 
                     genresContainer?.addView(genreLayout)
+                }
+
+                // Update current clubs
+                val clubContainer = view?.findViewById<LinearLayout>(R.id.club_container)
+                clubContainer?.removeAllViews()
+
+                val clubTitleTextView = TextView(context)
+                clubTitleTextView.text = "Your Clubs:"
+                clubTitleTextView.textSize = 18F
+                val boldType = Typeface.DEFAULT_BOLD
+                clubTitleTextView.typeface = boldType
+                clubContainer?.addView(clubTitleTextView)
+                clubContainer?.orientation = LinearLayout.VERTICAL
+
+                for (club in user.clubs){
+                    val clubLayout = LayoutInflater.from(context).inflate(R.layout.club_item, clubContainer, false)
+                    val clubTextView = clubLayout.findViewById<TextView>(R.id.club_text)
+                    val clubIcon = clubLayout.findViewById<ImageView>(R.id.club_icon)
+
+                    clubTextView.text = club.clubName
+                    clubIcon.setBackgroundResource(R.drawable.circle_shape)
+
+                    clubContainer?.addView(clubLayout)
                 }
 
             }
