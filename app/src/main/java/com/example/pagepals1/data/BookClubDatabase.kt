@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
-@Database(entities = [BookClub::class], version = 2)
+@Database(entities = [BookClub::class], version = 3)
 @TypeConverters(Converters::class)  // Add this line to link the converter
 abstract class BookClubDatabase: RoomDatabase() {
 

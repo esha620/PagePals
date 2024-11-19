@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
+import com.android.volley.RequestQueue
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.example.pagepals1.BookRVAdapter
@@ -27,6 +28,8 @@ class DiscoverFragment : Fragment() {
     private lateinit var searchBtn: ImageButton
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var bookAdapter: BookRVAdapter
+    private lateinit var mRequestQueue: RequestQueue
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,6 +41,7 @@ class DiscoverFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mRequestQueue = Volley.newRequestQueue(requireContext())
 
         // Initialize views
         loadingPB = view.findViewById(R.id.idLoadingPB)
@@ -63,51 +67,49 @@ class DiscoverFragment : Fragment() {
     }
 
     private fun getBooksData(searchQuery: String) {
-        // Request queue
-        val mRequestQueue = Volley.newRequestQueue(requireContext())
-        mRequestQueue.cache.clear()
+        val url = "https://www.googleapis.com/books/v1/volumes?q=$searchQuery&fields=items(volumeInfo(title,subtitle,authors,publisher,publishedDate,description,pageCount,imageLinks,previewLink,infoLink),saleInfo(buyLink))"
 
-        val url = "https://www.googleapis.com/books/v1/volumes?q=$searchQuery"
         val request = JsonObjectRequest(Request.Method.GET, url, null, { response ->
             loadingPB.visibility = View.GONE
             try {
-                // Clear previous data
-                booksList.clear()
+                // Handle empty response early
+                if (!response.has("items") || response.getJSONArray("items").length() == 0) {
+                    Toast.makeText(requireContext(), "No books found.", Toast.LENGTH_SHORT).show()
+                    return@JsonObjectRequest
+                }
 
                 val itemsArray = response.getJSONArray("items")
+                val newBooksList = ArrayList<BookRVModal>()
+
                 for (i in 0 until itemsArray.length()) {
                     val itemsObj = itemsArray.getJSONObject(i)
                     val volumeObj = itemsObj.getJSONObject("volumeInfo")
 
-                    val title = volumeObj.optString("title")
-                    val subtitle = volumeObj.optString("subtitle")
                     val authorsArray = volumeObj.optJSONArray("authors") ?: continue
-                    val publisher = volumeObj.optString("publisher")
-                    val publishedDate = volumeObj.optString("publishedDate")
-                    val description = volumeObj.optString("description")
-                    val pageCount = volumeObj.optInt("pageCount")
-                    val imageLinks = volumeObj.optJSONObject("imageLinks")
-                    val thumbnail = imageLinks?.optString("thumbnail") ?: ""
-                    val previewLink = volumeObj.optString("previewLink")
-                    val infoLink = volumeObj.optString("infoLink")
-                    val saleInfoObj = itemsObj.optJSONObject("saleInfo")
-                    val buyLink = saleInfoObj?.optString("buyLink") ?: ""
-
-                    val authorsArrayList = ArrayList<String>()
-                    for (j in 0 until authorsArray.length()) {
-                        authorsArrayList.add(authorsArray.optString(j))
+                    val authorsArrayList = ArrayList<String>().apply {
+                        for (j in 0 until authorsArray.length()) {
+                            add(authorsArray.optString(j))
+                        }
                     }
 
-                    // Add book info to the list
                     val bookInfo = BookRVModal(
-                        title, subtitle, authorsArrayList, publisher,
-                        publishedDate, description, pageCount,
-                        thumbnail, previewLink, infoLink, buyLink
+                        title = volumeObj.optString("title"),
+                        subtitle = volumeObj.optString("subtitle"),
+                        authors = authorsArrayList,
+                        publisher = volumeObj.optString("publisher"),
+                        publishedDate = volumeObj.optString("publishedDate"),
+                        description = volumeObj.optString("description"),
+                        pageCount = volumeObj.optInt("pageCount"),
+                        thumbnail = volumeObj.optJSONObject("imageLinks")?.optString("thumbnail") ?: "",
+                        previewLink = volumeObj.optString("previewLink"),
+                        infoLink = volumeObj.optString("infoLink"),
+                        buyLink = itemsObj.optJSONObject("saleInfo")?.optString("buyLink") ?: ""
                     )
-                    booksList.add(bookInfo)
+                    newBooksList.add(bookInfo)
                 }
 
-                // Notify adapter of data changes
+                booksList.clear()
+                booksList.addAll(newBooksList)
                 bookAdapter.notifyDataSetChanged()
 
             } catch (e: Exception) {
@@ -119,7 +121,7 @@ class DiscoverFragment : Fragment() {
             Toast.makeText(requireContext(), "No books found.", Toast.LENGTH_SHORT).show()
         })
 
-        // Add request to queue
         mRequestQueue.add(request)
     }
+
 }
