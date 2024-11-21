@@ -13,8 +13,10 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.pagepals1.LoginActivity
+import com.example.pagepals1.NetworkMonitor
 import com.example.pagepals1.R
 import com.example.pagepals1.fragments.UserViewModel
 import com.google.firebase.auth.FirebaseAuth
@@ -65,6 +67,13 @@ class HomeFragment : Fragment() {
             if (user != null) {
 
                 editProfileButton.setOnClickListener {
+                    // network check
+                    val networkMonitor = NetworkMonitor.getInstance()
+                    if (!networkMonitor.isConnected()) {
+                        Toast.makeText(requireContext(), "No network connection", Toast.LENGTH_SHORT).show()
+                        return@setOnClickListener
+                    }
+
                     val fragmentManager = requireActivity().supportFragmentManager
                     val transaction = fragmentManager.beginTransaction()
                     val fragment = EditProfileFragment()

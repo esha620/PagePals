@@ -16,6 +16,7 @@ import com.android.volley.RequestQueue
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.example.pagepals1.BookRVAdapter
+import com.example.pagepals1.NetworkMonitor
 import com.example.pagepals1.data.BookRVModal
 import com.example.pagepals1.R
 
@@ -57,6 +58,12 @@ class DiscoverFragment : Fragment() {
 
         // Set up search button click listener
         searchBtn.setOnClickListener {
+            val networkMonitor = NetworkMonitor.getInstance()
+            if (!networkMonitor.isConnected()) {
+                Toast.makeText(requireContext(), "No network connection", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             loadingPB.visibility = View.VISIBLE
             if (searchEdt.text.isNullOrEmpty()) {
                 searchEdt.error = "Please enter search query"

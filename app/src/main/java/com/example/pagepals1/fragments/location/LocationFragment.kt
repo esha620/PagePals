@@ -124,6 +124,12 @@ class LocationFragment : Fragment() {
                                 currentCity = addresses.get(0).getLocality()
                             }
                         }
+                        override fun onLocationAvailability(locationAvailability: com.google.android.gms.location.LocationAvailability?) {
+                            super.onLocationAvailability(locationAvailability)
+                            if (locationAvailability != null && !locationAvailability.isLocationAvailable) {
+                                Toast.makeText(requireContext(), "GPS signal lost. Please wait for a signal.", Toast.LENGTH_SHORT).show()
+                            }
+                        }
                     }
                     locationClient.requestLocationUpdates(locRequest, locCallback, Looper.myLooper())
                 }
