@@ -10,7 +10,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.fragment.app.FragmentTransaction
 import com.example.pagepals1.activities.HomeScreen
+import com.example.pagepals1.fragments.NoNetworkFragment
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
@@ -20,6 +22,9 @@ class LoginActivity : AppCompatActivity() {
     lateinit var auth: FirebaseAuth
     lateinit var regTextView: TextView
     lateinit var resetPassword : TextView
+
+    //private lateinit var networkMonitor: NetworkMonitor
+
 
     public override fun onStart() {
         super.onStart()
@@ -47,6 +52,12 @@ class LoginActivity : AppCompatActivity() {
         regTextView = findViewById(R.id.registerNow)
         resetPassword = findViewById(R.id.forgot_password)
 
+//        val networkMonitor = NetworkMonitor.getInstance()
+//        if (!networkMonitor.isConnected()) {
+//            showNoNetworkFragment()
+//            return
+//        }
+
         regTextView.setOnClickListener{
             var intent: Intent = Intent(applicationContext, RegistrationActivity::class.java)
             startActivity(intent)
@@ -66,6 +77,11 @@ class LoginActivity : AppCompatActivity() {
         loginBtn.setOnClickListener{
             val username = usernameInput.text.toString()
             val password = passwordInput.text.toString()
+            val networkMonitor = NetworkMonitor.getInstance()
+            if (!networkMonitor.isConnected()) {
+                Toast.makeText(this, "No network connection", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
             if (username.isEmpty()){
                 Toast.makeText(this, "Please enter a valid email", Toast.LENGTH_SHORT).show()
@@ -97,5 +113,15 @@ class LoginActivity : AppCompatActivity() {
         }
 
 
+
     }
+    private fun showNoNetworkFragment() {
+        val noNetworkFragment = NoNetworkFragment()
+        supportFragmentManager.beginTransaction()
+            .replace(android.R.id.content, noNetworkFragment)
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            .commit()
+    }
+
+
 }
