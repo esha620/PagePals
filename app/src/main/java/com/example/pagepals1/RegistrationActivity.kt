@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.pagepals1.activities.HomeScreen
+import com.example.pagepals1.utils.InputValidator
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
@@ -88,20 +89,21 @@ class RegistrationActivity : AppCompatActivity() {
             val intent = Intent(applicationContext, LoginActivity::class.java)
 
 
-            if (username.isEmpty()){
+            if (!InputValidator.isValidEmail(username)) {
                 Toast.makeText(this, "Please enter a valid email", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener // Exit the listener early if validation fails
             }
 
-            if (password.isEmpty()){
-                Toast.makeText(this, "Please enter a valid password", Toast.LENGTH_SHORT).show()
-            }
-            if (password.length < 6){
+            if (!InputValidator.isValidPassword(password)) {
                 Toast.makeText(this, "Password must be at least 6 characters", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener // Exit if password is invalid
             }
 
-            if (name.isEmpty()){
+            if (!InputValidator.isValidName(name)) {
                 Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener // Exit if name is invalid
             }
+
 
             auth.createUserWithEmailAndPassword(username, password)
                 .addOnCompleteListener(this) { task ->
