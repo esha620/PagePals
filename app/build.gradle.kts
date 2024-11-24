@@ -49,7 +49,9 @@ dependencies {
     implementation("androidx.room:room-ktx:2.6.1")
     implementation(libs.firebase.database.ktx)
     implementation (libs.androidx.security.crypto)
-    implementation(libs.firebase.common.ktx) // Kotlin extensions for Room
+    implementation(libs.firebase.common.ktx)
+    implementation(libs.androidx.espresso.core)
+    implementation(libs.androidx.junit.ktx) // Kotlin extensions for Room
     kapt("androidx.room:room-compiler:2.6.1") // Annotation processor for Room
 
     //Android Navigation

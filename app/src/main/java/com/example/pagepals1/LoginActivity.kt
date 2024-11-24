@@ -27,7 +27,6 @@ class LoginActivity : AppCompatActivity() {
 
     //private lateinit var networkMonitor: NetworkMonitor
 
-
     public override fun onStart() {
         super.onStart()
         val currentUser = auth.currentUser
@@ -37,11 +36,12 @@ class LoginActivity : AppCompatActivity() {
             finish()
         }
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_login)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.loginMain)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
