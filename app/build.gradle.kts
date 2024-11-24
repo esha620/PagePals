@@ -48,6 +48,8 @@ dependencies {
     implementation("androidx.room:room-runtime:2.6.1") // Replace with the latest version
     implementation("androidx.room:room-ktx:2.6.1")
     implementation(libs.firebase.database.ktx)
+    implementation (libs.androidx.security.crypto)
+    implementation(libs.firebase.common.ktx) // Kotlin extensions for Room
     implementation(libs.firebase.common.ktx)
     implementation(libs.androidx.junit.ktx)
     implementation(libs.androidx.espresso.contrib) // Kotlin extensions for Room

@@ -2,6 +2,7 @@ package com.example.pagepals1
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -15,6 +16,7 @@ import androidx.fragment.app.FragmentTransaction
 import com.example.pagepals1.activities.HomeScreen
 import com.example.pagepals1.fragments.NoNetworkFragment
 import com.google.firebase.auth.FirebaseAuth
+import java.security.MessageDigest
 
 class LoginActivity : AppCompatActivity() {
     lateinit var usernameInput : EditText
@@ -102,7 +104,9 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, "Please enter a valid password", Toast.LENGTH_SHORT).show()
             }
 
-            auth.signInWithEmailAndPassword(username, password)
+            val hashedPassword = hashPassword(password)
+
+            auth.signInWithEmailAndPassword(username, hashedPassword)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
@@ -117,10 +121,10 @@ class LoginActivity : AppCompatActivity() {
                             "Authentication failed.",
                             Toast.LENGTH_SHORT,
                         ).show()
+                        Log.e("LoginActivity", "signInWithEmailAndPassword failed", task.exception)
+
                     }
                 }
-
-
         }
 
 
@@ -134,5 +138,9 @@ class LoginActivity : AppCompatActivity() {
             .commit()
     }
 
-
+    fun hashPassword(password: String): String {
+        val digest = MessageDigest.getInstance("SHA-256")
+        val hashedBytes = digest.digest(password.toByteArray())
+        return hashedBytes.joinToString("") { it.toString(16).padStart(2, '0') }
+    }
 }
