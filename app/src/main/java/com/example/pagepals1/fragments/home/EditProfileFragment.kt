@@ -106,8 +106,10 @@ class EditProfileFragment : Fragment(){
                 var ref = user.getFirebaseUser(user.id)
                 var updatedUser = mutableMapOf<String, Any>()
                 updatedUser["id"] = user.id
-                updatedUser["name"] = nameEditText.text.toString()
-                updatedUser[ "username"] = usernameEditText.text.toString()
+                updatedUser["name"] = user.name
+                if (nameEditText.text.isNotEmpty()) updatedUser["name"] = nameEditText.text.toString()
+                updatedUser["username"] = user.username
+                if (usernameEditText.text.isNotEmpty()) updatedUser[ "username"] = usernameEditText.text.toString()
                 updatedUser["password"] = user.password
                 updatedUser["genres"] = selectedGenres
                 updatedUser["clubs"] = user.clubs

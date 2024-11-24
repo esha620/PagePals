@@ -5,7 +5,6 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
-import com.example.pagepals1.data.User
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
@@ -17,9 +16,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.pagepals1.activities.HomeScreen
+import com.example.pagepals1.data.User
 import com.example.pagepals1.utils.InputValidator
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import java.security.MessageDigest
 
 class RegistrationActivity : AppCompatActivity() {
 
@@ -104,8 +105,9 @@ class RegistrationActivity : AppCompatActivity() {
                 return@setOnClickListener // Exit if name is invalid
             }
 
+            val hashedPassword = hashPassword(password)
 
-            auth.createUserWithEmailAndPassword(username, password)
+            auth.createUserWithEmailAndPassword(username, hashedPassword)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         val firebaseUser = auth.currentUser
@@ -113,7 +115,7 @@ class RegistrationActivity : AppCompatActivity() {
                             id = firebaseUser?.uid ?: "",
                             name = nameInput.text.toString(),
                             username = usernameInput.text.toString(),
-                            password = passwordInput.text.toString(),
+                            password = hashedPassword,
                             genres = selectedGenres
                         )
 
@@ -138,9 +140,16 @@ class RegistrationActivity : AppCompatActivity() {
                             "Authentication failed.",
                             Toast.LENGTH_SHORT,
                         ).show()
+                        Log.e("RegistrationActivity", "createUserWithEmailAndPassword failed", task.exception)
                     }
                 }
 
         }
+    }
+
+    fun hashPassword(password: String): String {
+        val digest = MessageDigest.getInstance("SHA-256")
+        val hashedBytes = digest.digest(password.toByteArray())
+        return hashedBytes.joinToString("") { it.toString(16).padStart(2, '0') }
     }
 }
