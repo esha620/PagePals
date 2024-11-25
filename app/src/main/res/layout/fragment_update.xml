@@ -8,85 +8,71 @@
     android:paddingBottom="16dp"
     tools:context=".fragments.clubs.UpdateFragment">
 
-<TextView
-android:id="@+id/update_txt"
-android:layout_width="0dp"
-android:layout_height="wrap_content"
-android:layout_marginStart="176dp"
-android:layout_marginTop="24dp"
-android:layout_marginEnd="176dp"
-android:layout_marginBottom="21dp"
-android:text="Update Club"
-app:layout_constraintBottom_toTopOf="@+id/updateClubName"
-app:layout_constraintEnd_toEndOf="parent"
-app:layout_constraintStart_toStartOf="parent"
-app:layout_constraintTop_toTopOf="parent" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="85dp">
 
-<EditText
-android:id="@+id/updateClubName"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:layout_marginTop="100dp"
-android:ems="10"
-android:hint="Club Name"
-android:inputType="textPersonName"
-app:layout_constraintEnd_toEndOf="parent"
-app:layout_constraintHorizontal_bias="0.5"
-app:layout_constraintStart_toStartOf="parent"
-app:layout_constraintTop_toBottomOf="@id/update_txt" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
-<TextView
-android:id="@+id/selectMembersTextView"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:layout_marginTop="16dp"
-android:text="Select Members"
-android:textSize="18sp"
-app:layout_constraintStart_toStartOf="parent"
-app:layout_constraintTop_toBottomOf="@id/updateClubName" />
+            <TextView
+                android:id="@+id/update_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textSize="17sp"
+                android:text="Update Club" />
 
-<androidx.recyclerview.widget.RecyclerView
-android:id="@+id/rv_users"
-android:layout_width="match_parent"
-android:layout_height="200dp"
-    android:layout_marginTop="16dp"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.0"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/selectMembersTextView" />
+            <EditText
+                android:id="@+id/updateClubName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Club Name"
+                android:inputType="textPersonName" />
 
-<EditText
-android:id="@+id/updateCityName"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:layout_marginTop="20dp"
-android:ems="10"
-android:hint="City Name"
-android:inputType="textPersonName"
-app:layout_constraintEnd_toEndOf="parent"
-app:layout_constraintStart_toStartOf="parent"
-app:layout_constraintTop_toBottomOf="@+id/rv_users" />
+            <TextView
+                android:id="@+id/selectMembersTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Select Members"
+                android:textSize="18sp" />
 
-<Button
-android:id="@+id/updateBtn"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:layout_marginStart="160dp"
-android:layout_marginTop="16dp"
-android:layout_marginEnd="160dp"
-android:text="Update"
-app:layout_constraintEnd_toEndOf="parent"
-app:layout_constraintStart_toStartOf="parent"
-app:layout_constraintTop_toBottomOf="@id/updateCityName" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_users"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="16dp" />
 
-<com.google.android.material.floatingactionbutton.FloatingActionButton
-android:id="@+id/deleteBtn"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:layout_marginEnd="36dp"
-android:layout_marginBottom="96dp"
-android:clickable="true"
-android:src="@drawable/baseline_delete_24"
-app:layout_constraintBottom_toBottomOf="parent"
-app:layout_constraintEnd_toEndOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <EditText
+                android:id="@+id/updateCityName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:ems="10"
+                android:hint="City Name"
+                android:inputType="textPersonName" />
+
+            <Button
+                android:id="@+id/updateBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_gravity="center_horizontal"
+                android:text="Update" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/deleteBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_margin="16dp"
+                android:clickable="true"
+                android:src="@drawable/baseline_delete_24" />
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

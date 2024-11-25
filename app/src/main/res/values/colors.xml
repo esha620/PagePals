@@ -3,4 +3,5 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="primaryColor">#45b6fe</color>
+    <color name="bottomNavBackgroundColor">#F0F0F0</color>
 </resources>
