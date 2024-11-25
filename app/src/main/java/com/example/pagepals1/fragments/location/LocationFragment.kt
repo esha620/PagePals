@@ -19,6 +19,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Button
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -45,7 +46,7 @@ class LocationFragment : Fragment() {
     private lateinit var mBookClubViewModel: BookClubViewModel
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: LocListAdapter
-    private lateinit var noClubsMsg: TextView
+    private lateinit var alert: AlertDialog
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,14 +58,22 @@ class LocationFragment : Fragment() {
         mBookClubViewModel = ViewModelProvider(this).get(BookClubViewModel::class.java)
         locationTitle = view.findViewById(R.id.locationTitle)!!
         locationBtn = view.findViewById(R.id.getLocationButton)!!
-        noClubsMsg = view.findViewById(R.id.noClubsMsg)
-        noClubsMsg.visibility = View.INVISIBLE
         locationClient = LocationServices.getFusedLocationProviderClient(requireActivity()) // get location client
         // create recycler view to show clubs in my city
         recyclerView = view.findViewById(R.id.locRecycler)
         adapter = LocListAdapter()
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        // make a dialog box to say "No clubs in your area" if there's no results
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setMessage("No clubs found in Your area")
+            .setCancelable(true) // Allows the dialog to be dismissed by tapping outside
+            .setPositiveButton("Dismiss") { dialog, _ ->
+                // Action for dismiss button
+                dialog.dismiss()
+            }
+        alert = builder.create()
 
         locationBtn.setOnClickListener {
             // make sure the user has given permission to access their location
@@ -142,18 +151,16 @@ class LocationFragment : Fragment() {
     }
 
     private fun showLocalClubs() {
+        adapter.clearData()
         // get all clubs in the current city
         mBookClubViewModel.readAllData.observe(viewLifecycleOwner, Observer { club ->
-            var count = 0
             for (club in club) {
                 if (club.city == currentCity) {
-                    count++
-                    Log.d("CLUB", club.clubName)
                     adapter.setData(club)
                 }
             }
-            if (count == 0) {
-                noClubsMsg.visibility = View.VISIBLE
+            if (adapter.itemCount == 0) {
+                alert.show()
             }
         })
 

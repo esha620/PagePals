@@ -8,76 +8,64 @@
     android:paddingBottom="16dp"
     tools:context=".fragments.clubs.AddClubFragment">
 
-<TextView
-android:id="@+id/textView3"
-android:layout_width="0dp"
-android:layout_height="wrap_content"
-android:layout_marginStart="176dp"
-android:layout_marginTop="24dp"
-android:layout_marginEnd="176dp"
-android:layout_marginBottom="21dp"
-android:text="Add Club"
-app:layout_constraintBottom_toTopOf="@+id/editTextText"
-app:layout_constraintEnd_toEndOf="parent"
-app:layout_constraintStart_toStartOf="parent"
-app:layout_constraintTop_toTopOf="parent" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="85dp">
 
-<EditText
-android:id="@+id/editTextText"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:layout_marginTop="100dp"
-android:ems="10"
-android:hint="Club Name"
-android:inputType="textPersonName"
-app:layout_constraintEnd_toEndOf="parent"
-app:layout_constraintHorizontal_bias="0.5"
-app:layout_constraintStart_toStartOf="parent"
-app:layout_constraintTop_toTopOf="parent" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
 
-<TextView
-android:id="@+id/selectMembersTextView"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:layout_marginTop="16dp"
-android:text="Select Members"
-android:textSize="18sp"
-app:layout_constraintStart_toStartOf="parent"
-app:layout_constraintTop_toBottomOf="@id/editTextText" />
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textSize="17sp"
+                android:text="Add Club" />
 
-<androidx.recyclerview.widget.RecyclerView
-android:id="@+id/rv_users"
-android:layout_width="match_parent"
-android:layout_height="200dp"
-    android:layout_marginTop="10dp"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.0"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/selectMembersTextView" />
+            <EditText
+                android:id="@+id/editTextText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:ems="10"
+                android:hint="Club Name"
+                android:inputType="textPersonName" />
 
-<EditText
-android:id="@+id/editTextCity"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:layout_marginTop="20dp"
-android:ems="10"
-android:hint="City"
-android:inputType="textPersonName"
-app:layout_constraintEnd_toEndOf="parent"
-app:layout_constraintHorizontal_bias="1.0"
-app:layout_constraintStart_toStartOf="parent"
-app:layout_constraintTop_toBottomOf="@+id/rv_users" />
+            <TextView
+                android:id="@+id/selectMembersTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Select Members"
+                android:textSize="18sp" />
 
-<Button
-android:id="@+id/button"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:layout_marginStart="160dp"
-android:layout_marginTop="16dp"
-android:layout_marginEnd="160dp"
-android:text="Add"
-app:layout_constraintTop_toBottomOf="@id/editTextCity"
-app:layout_constraintBottom_toBottomOf="parent"
-app:layout_constraintEnd_toEndOf="parent"
-app:layout_constraintStart_toStartOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_users"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="10dp" />
+
+            <EditText
+                android:id="@+id/editTextCity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:ems="10"
+                android:hint="City"
+                android:inputType="textPersonName" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center_horizontal"
+                android:text="Add" />
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

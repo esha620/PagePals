@@ -44,15 +44,6 @@
     </LinearLayout>
 
     <!-- RecyclerView for displaying the list of books -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/idRVBooks"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/idLLsearch"
-        android:layout_above="@id/hiddenSpace"
-        android:clipToPadding="false"
-        android:padding="8dp"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
 
     <!-- Invisible Space (used to create extra space for positioning) -->
     <Space
@@ -69,5 +60,25 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:visibility="gone" />
+
+    <ScrollView
+        android:layout_marginVertical="85dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/idRVBooks"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:padding="8dp"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
+        </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

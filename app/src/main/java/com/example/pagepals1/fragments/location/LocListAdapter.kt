@@ -55,5 +55,10 @@ class LocListAdapter: RecyclerView.Adapter<LocListAdapter.MyViewHolder>() {
         return clubList.size
     }
 
+    fun clearData() {
+        clubList = emptyList()
+        notifyDataSetChanged()
+    }
+
 
 }
