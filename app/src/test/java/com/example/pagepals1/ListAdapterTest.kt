@@ -13,10 +13,6 @@ import org.junit.Assert.*
  *
  */
 class ListAdapterTest {
-    @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
-    }
 
     @Test
     fun testSetDataUpdatesClubListAndNotifiesAdapter() {
@@ -27,6 +23,13 @@ class ListAdapterTest {
         adapter.setData2(testClubs)
 
         TestCase.assertEquals(testClubs, adapter.clubList)
-
     }
+
+    @Test
+    fun testEmptyStateHandling() {
+        val adapter = ListAdapter()
+        adapter.setData2(emptyList())
+        TestCase.assertEquals(0, adapter.itemCount)
+    }
+
 }
