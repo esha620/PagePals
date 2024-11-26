@@ -13,7 +13,7 @@ import com.google.firebase.database.FirebaseDatabase
 
 class LocListAdapter: RecyclerView.Adapter<LocListAdapter.MyViewHolder>() {
 
-    private var clubList = emptyList<BookClub>()
+    var clubList = emptyList<BookClub>()
 
     class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) { }
 
@@ -48,6 +48,12 @@ class LocListAdapter: RecyclerView.Adapter<LocListAdapter.MyViewHolder>() {
         if (!clubList.contains(bookClub)) {
             clubList = clubList + bookClub
             notifyDataSetChanged()
+        }
+    }
+
+    fun setData2(bookClub: BookClub) {
+        if (!clubList.contains(bookClub)) {
+            clubList = clubList + bookClub
         }
     }
 

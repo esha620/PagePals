@@ -55,6 +55,7 @@ dependencies {
     implementation(libs.firebase.common.ktx) // Kotlin extensions for Room
     implementation(libs.firebase.common.ktx)
     implementation(libs.androidx.junit.ktx)
+    implementation(libs.androidx.fragment.testing)
     kapt("androidx.room:room-compiler:2.6.1") // Annotation processor for Room
 
     //Android Navigation
@@ -92,7 +93,6 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.runner:runner:1.5.2")
+
 
 }
