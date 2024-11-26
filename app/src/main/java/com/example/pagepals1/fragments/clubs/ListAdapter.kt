@@ -14,7 +14,7 @@ import com.google.firebase.database.DatabaseReference
 
 class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
-    private var clubList = emptyList<BookClub>()
+    var clubList = emptyList<BookClub>()
 
     class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) { }
 
@@ -56,6 +56,10 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
     fun setData(bookClub: List<BookClub>) {
         this.clubList = bookClub
         notifyDataSetChanged()
+    }
+
+    fun setData2(bookClub: List<BookClub>) {
+        this.clubList = bookClub
     }
 
     override fun getItemCount(): Int {
