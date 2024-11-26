@@ -67,7 +67,7 @@ class LocationFragment : Fragment() {
 
         // make a dialog box to say "No clubs in your area" if there's no results
         val builder = AlertDialog.Builder(requireContext())
-        builder.setMessage("No clubs found in Your area")
+        builder.setMessage("No clubs found in your area")
             .setCancelable(true) // Allows the dialog to be dismissed by tapping outside
             .setPositiveButton("Dismiss") { dialog, _ ->
                 // Action for dismiss button
